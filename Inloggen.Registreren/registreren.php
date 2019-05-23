@@ -3,7 +3,7 @@
     <title>Registreren</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/Registreren.css">
+    <link rel="stylesheet" type="text/css" href="css/registreren.css">
 </head>
 
 <body>
@@ -41,15 +41,19 @@
     <div class="row justify-content-center">
         <div class="col-12 col-sm-6 col-md-3">
 
-            <form class="form-container" action="login.php" method="post">
+            <form class="form-container" action="registreren.php" method="post">
                 <p class="txt-LogIn">REGISTREREN</p>
                 <div class="form-group">
                     <label>Voornaam</label>
-                    <input name="inputVoornaam" type="password" class="form-control" required>
+                    <input name="inputVoornaam" type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Tussenvoegsels</label>
+                    <input name="inputTussenvoegsels" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Achternaam</label>
-                    <input name="inputAchternaam" type="password" class="form-control" required>
+                    <input name="inputAchternaam" type="text" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label>E-mailadres</label>
@@ -76,9 +80,7 @@
 </div>
 <!--------------------------------------------------------------------------------------------------------------------->
 
-
-
-<!-- Footer -->
+<!--Footer------------------------------------------------------------------------------------------------------------->
 <footer class="py-5 bg-dark">
     <div class="container" style="text-align: center">
         <br>
@@ -97,15 +99,64 @@
         <br>
         <p class="m-0 text-center text-white">Copyright &copy; Eindopdracht Strijders 2019</p>
     </div>
-    <!-- /.container -->
+    <!--container----------------------------------------------------------------------------------------------------->
 </footer>
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<?php
+
+$input_Voornaam = filter_input(INPUT_POST, 'inputVoornaam');
+$input_Tussenvoegsels = filter_input(INPUT_POST, 'inputTussenvoegsels');
+$input_Achternaam = filter_input(INPUT_POST, 'inputAchternaam');
+$input_Email = filter_input(INPUT_POST, 'inputEmail');
+$input_Wachtwoord = filter_input(INPUT_POST, 'inputWachtwoord');
+
+if (!empty($input_Voornaam))
+{
+    if (!empty($input_Achternaam))
+    {
+        if (!empty($input_Email))
+        {
+            if (!empty($input_Wachtwoord))
+            {
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "eindopdracht-strijders";
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error)
+                {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                $query = "INSERT INTO users (User_ID, Voornaam, Tussenvoegsels, Achternaam, Emailadres, Wachtwoord)
+                        VALUES ('', '$input_Voornaam', '$input_Tussenvoegsels', '$input_Achternaam', '$input_Email', '$input_Wachtwoord')";
+
+                if ($conn->query($query) === TRUE)
+                {
+                    echo "<script>alert(\"Registratie Succesfull\");</script>";
+                }
+                else
+                {
+                    echo "<script>alert(\"Registratie Failed\");</script>";
+                }
+
+                $conn->close();
+            }
+        }
+    }
+}
+
+?>
+
+
+
+
