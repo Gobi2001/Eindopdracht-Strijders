@@ -1,0 +1,47 @@
+<div class="row col-lg-12">
+                <h1 class="row col-lg-12">Laatst Toegevoegde Fietsen</h1>
+                <div class="row bg-light">
+                    <?php
+                        $res = mysqli_query($link, "select * from aanbiedingen");
+                        while ($row = mysqli_fetch_array($res)) {
+                            ?>
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <a href="#"><img class="card-img-top" src="<?php echo $row["plaatje"]; ?>alt=""></a>
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <a href="#"><?php echo $row["naam"]?></a>
+                                        </h4>
+                                        <h5>€ <?php echo $row["prijs"] ?></h5>
+                                        <p class="card-text"><?php echo $row["beschrijving"] ?></p>
+                                        <a href="#" class="small btn btn-success col-lg-12">Bekijk de fiets!</a>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    ?>
+                    <h1 class="row col-lg-12">Speciale Aanbiedingen</h1>
+                        <?php
+                        $res = mysqli_query($link, "select * from speciale_aanbiedingen");
+                        while ($row = mysqli_fetch_array($res)) {
+                            ?>
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <a href="#"><img class="card-img-top" src="<?php echo $row["plaatje"];?>" alt=""></a>
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <a href="#"><?php echo $row["naam"]?></a>
+                                        </h4>
+                                        <h5 style="color: red"> <strike>€ <?php echo $row["oude_prijs"] ?> </strike></h5>
+                                        <h5>€ <?php echo $row["nu_prijs"] ?></h5><br>
+                                        <a href="#" class="small btn btn-success col-lg-12">Bekijk de fiets!</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
